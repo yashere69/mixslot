@@ -51,6 +51,40 @@ stranger's phone, or a cancelled order that wasn't theirs. The normaliser's vali
 wrong values from 26 to 2 at noise 0.3, because a 9-digit "phone number" or a phone
 number starting with 5 is refused, not passed on.
 
+## Use it in front of your own tools
+
+The normaliser is the part worth taking. Your order ids won't look like the demo's
+`KC7252`, so give it your own pattern:
+
+```python
+from mixslot.extract import extract
+
+extract("mera order O R D double four one zero hai", r"ORD\d{4}")   # 'ORD4410'
+extract("order number ORD44101", r"ORD\d{4}")                       # None: ask again
+```
+
+```bash
+mixslot extract custom "order O R D 4 4 1 0" --pattern 'ORD\d{4}'
+```
+
+`extract` normalises first: digit words in English, romanised Hindi or Devanagari, "double"
+and "triple", spelled letters ("O R D", "kay see"), Devanagari digits, fillers inside
+numbers. It returns a match only if nothing touches it on either side, and returns `None`
+rather than a near miss. Put it between the transcript and the tool call, and treat `None`
+as "could you repeat that?".
+
+Spelled letters are only joined when a number follows them, and "are", "you", "why" and
+"oh" aren't treated as letter names, because in Hinglish calls they're nearly always just
+words.
+
+## Prior art
+
+Inverse text normalisation (turning "nine eight seven" into 987) is a solved problem for
+English. NVIDIA's [NeMo text processing](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/nlp/text_normalization/wfst/wfst_text_normalization.html)
+does it with WFST grammars for a list of languages. Hindi and Hinglish aren't on that list,
+and its only code-switched entry is Spanish-English. mixslot is narrower: digits and codes
+only, no grammar toolkit, about 150 lines.
+
 ## The noise model
 
 Each operator fires with probability proportional to `level` on each eligible token:
