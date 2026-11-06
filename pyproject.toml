@@ -1,6 +1,6 @@
 [project]
 name = "mixslot"
-version = "0.1.0"
+version = "0.2.0"
 description = "How Hinglish speech-recognition errors corrupt voice-agent tool arguments, and how much a normaliser recovers."
 readme = "README.md"
 license = { text = "MIT" }

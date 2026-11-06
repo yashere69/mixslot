@@ -35,10 +35,64 @@ def naive(slot: str, text: str) -> str | None:
     return ("KC" + m.group(1)) if slot == "order_id" else m.group(1)
 
 
+# Letter names ASR writes when a caller spells a code. "are", "you", "why" and "oh" are left
+# out on purpose: they're ordinary words far more often than they're R, U, Y or O.
+LETTER_NAMES = {
+    "ay": "A",
+    "bee": "B",
+    "see": "C",
+    "dee": "D",
+    "ee": "E",
+    "ef": "F",
+    "jee": "G",
+    "aitch": "H",
+    "jay": "J",
+    "kay": "K",
+    "el": "L",
+    "em": "M",
+    "en": "N",
+    "pee": "P",
+    "queue": "Q",
+    "cue": "Q",
+    "ess": "S",
+    "tee": "T",
+    "vee": "V",
+    "ex": "X",
+    "zed": "Z",
+    "zee": "Z",
+}
+
+
+def _letter(tok: str) -> str | None:
+    if len(tok) == 1 and tok.isalpha() and tok.isupper():
+        return tok
+    return LETTER_NAMES.get(tok.lower())
+
+
+def _spelled_codes(tokens: list[str]) -> list[str]:
+    """Join a spelled run of two or more letters that is followed by a number:
+    'kay see 7252' -> 'KC 7252', 'O R D 4410' stays letters only when digits follow."""
+    out: list[str] = []
+    i = 0
+    while i < len(tokens):
+        j = i
+        letters = []
+        while j < len(tokens) and (ch := _letter(tokens[j].strip(",."))):
+            letters.append(ch)
+            j += 1
+        nxt = tokens[j].lower().strip(",.") if j < len(tokens) else ""
+        if len(letters) >= 2 and (nxt.isdigit() or nxt in WORD_TO_DIGIT or nxt in REPEAT):
+            out.append("\x01" + "".join(letters))
+            i = j
+        else:
+            out.append(tokens[i])
+            i += 1
+    return out
+
+
 def normalise(text: str) -> str:
-    text = text.translate(DEV)
-    text = re.sub(r"\b(kay|k)\s+(see|c)\b", "KC", text, flags=re.I)
-    tokens = text.split()
+    """Rebuild codes and numbers the way they were said. Deterministic, no model."""
+    tokens = _spelled_codes(text.translate(DEV).split())
     out: list[str] = []
     run = ""
     repeat = 1
@@ -73,7 +127,27 @@ def normalise(text: str) -> str:
         out.append(tok)
     flush()
     out.extend(pending_fillers)
-    return re.sub(r"\bKC\s+(\d)", r"KC\1", " ".join(out))
+    joined = " ".join(out)
+    joined = re.sub(r"\x01([A-Z]+) (\d)", r"\1\2", joined)  # spelled letters + their digits
+    return joined.replace("\x01", "")
+
+
+def extract(text: str, pattern: str | re.Pattern[str]) -> str | None:
+    r"""Your own slot: normalise, then return the first match of `pattern`, or None.
+
+    `pattern` is matched against the normalised text with digit boundaries on both sides,
+    so r"ORD\d{5}" won't match inside a longer number. None means "ask the caller again".
+    """
+    rx = re.compile(pattern) if isinstance(pattern, str) else pattern
+    norm = normalise(text)
+    # also try with a typed space closed up ('ORD 4410'), without rewriting the text itself
+    for candidate in (norm, re.sub(r"\b([A-Z]{2,4}) (\d)", r"\1\2", norm)):
+        for m in rx.finditer(candidate):
+            before = candidate[m.start() - 1] if m.start() else " "
+            after = candidate[m.end()] if m.end() < len(candidate) else " "
+            if not before.isalnum() and not after.isdigit():
+                return m.group()
+    return None
 
 
 def normalised(slot: str, text: str) -> str | None:

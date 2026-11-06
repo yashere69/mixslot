@@ -5,11 +5,12 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
 from . import __version__, bench
-from .extract import naive, normalise, normalised
+from .extract import extract, naive, normalise, normalised
 
 
 def _table(data: dict) -> str:
@@ -36,10 +37,23 @@ def main(argv: list[str] | None = None) -> int:
     b.add_argument("--endpoint", help="also run an OpenAI-compatible model (key: MIXSLOT_API_KEY)")
     b.add_argument("--model")
     x = sub.add_parser("extract", help="extract one slot from a transcript")
-    x.add_argument("slot", choices=["order_id", "phone", "pin", "amount"])
+    x.add_argument("slot", choices=["order_id", "phone", "pin", "amount", "custom"])
     x.add_argument("transcript")
+    x.add_argument("--pattern", help="regex for a custom slot, e.g. 'ORD\\d{5}'")
     args = ap.parse_args(argv)
 
+    if args.cmd == "extract" and args.slot == "custom":
+        if not args.pattern:
+            print("error: custom slots need --pattern", file=sys.stderr)
+            return 2
+        try:
+            value = extract(args.transcript, args.pattern)
+        except re.error as e:
+            print(f"error: --pattern: {e}", file=sys.stderr)
+            return 2
+        print(f"normalised text: {normalise(args.transcript)}")
+        print(f"value:           {value}")
+        return 0
     if args.cmd == "extract":
         print(f"normalised text: {normalise(args.transcript)}")
         print(f"naive:           {naive(args.slot, args.transcript)}")
@@ -50,7 +64,14 @@ def main(argv: list[str] | None = None) -> int:
         bench.EXTRACTORS["llm"] = bench.llm_extractor(
             args.endpoint, args.model, os.environ.get("MIXSLOT_API_KEY", "")
         )
-    levels = [float(v) for v in args.levels.split(",")] if args.levels else None
+    try:
+        levels = [float(v) for v in args.levels.split(",")] if args.levels else None
+    except ValueError:
+        print("error: --levels takes numbers like 0,0.1,0.3", file=sys.stderr)
+        return 2
+    if levels and not all(0 <= lv <= 1 for lv in levels):
+        print("error: noise levels are probabilities between 0 and 1", file=sys.stderr)
+        return 2
     data = bench.run(args.n, args.seed, levels)
     print(_table(data))
     if args.json:
