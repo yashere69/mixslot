@@ -1,0 +1,688 @@
+{
+ "n": 400,
+ "seed": 11,
+ "rows": [
+  {
+   "level": 0.0,
+   "extractor": "naive",
+   "total": {
+    "correct": 400,
+    "wrong": 0,
+    "abstain": 0
+   },
+   "slots": {
+    "pin": {
+     "correct": 112,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "order_id": {
+     "correct": 93,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "phone": {
+     "correct": 100,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "amount": {
+     "correct": 95,
+     "wrong": 0,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.0,
+   "extractor": "normalised",
+   "total": {
+    "correct": 400,
+    "wrong": 0,
+    "abstain": 0
+   },
+   "slots": {
+    "pin": {
+     "correct": 112,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "order_id": {
+     "correct": 93,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "phone": {
+     "correct": 100,
+     "wrong": 0,
+     "abstain": 0
+    },
+    "amount": {
+     "correct": 95,
+     "wrong": 0,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.05,
+   "extractor": "naive",
+   "total": {
+    "correct": 353,
+    "wrong": 6,
+    "abstain": 41
+   },
+   "slots": {
+    "pin": {
+     "correct": 99,
+     "wrong": 1,
+     "abstain": 12
+    },
+    "order_id": {
+     "correct": 83,
+     "wrong": 0,
+     "abstain": 10
+    },
+    "phone": {
+     "correct": 87,
+     "wrong": 0,
+     "abstain": 13
+    },
+    "amount": {
+     "correct": 84,
+     "wrong": 5,
+     "abstain": 6
+    }
+   }
+  },
+  {
+   "level": 0.05,
+   "extractor": "normalised",
+   "total": {
+    "correct": 389,
+    "wrong": 1,
+    "abstain": 10
+   },
+   "slots": {
+    "pin": {
+     "correct": 110,
+     "wrong": 0,
+     "abstain": 2
+    },
+    "order_id": {
+     "correct": 87,
+     "wrong": 0,
+     "abstain": 6
+    },
+    "phone": {
+     "correct": 98,
+     "wrong": 0,
+     "abstain": 2
+    },
+    "amount": {
+     "correct": 94,
+     "wrong": 1,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.1,
+   "extractor": "naive",
+   "total": {
+    "correct": 302,
+    "wrong": 16,
+    "abstain": 82
+   },
+   "slots": {
+    "pin": {
+     "correct": 82,
+     "wrong": 8,
+     "abstain": 22
+    },
+    "order_id": {
+     "correct": 71,
+     "wrong": 2,
+     "abstain": 20
+    },
+    "phone": {
+     "correct": 73,
+     "wrong": 0,
+     "abstain": 27
+    },
+    "amount": {
+     "correct": 76,
+     "wrong": 6,
+     "abstain": 13
+    }
+   }
+  },
+  {
+   "level": 0.1,
+   "extractor": "normalised",
+   "total": {
+    "correct": 388,
+    "wrong": 0,
+    "abstain": 12
+   },
+   "slots": {
+    "pin": {
+     "correct": 111,
+     "wrong": 0,
+     "abstain": 1
+    },
+    "order_id": {
+     "correct": 85,
+     "wrong": 0,
+     "abstain": 8
+    },
+    "phone": {
+     "correct": 97,
+     "wrong": 0,
+     "abstain": 3
+    },
+    "amount": {
+     "correct": 95,
+     "wrong": 0,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.15,
+   "extractor": "naive",
+   "total": {
+    "correct": 263,
+    "wrong": 28,
+    "abstain": 109
+   },
+   "slots": {
+    "pin": {
+     "correct": 69,
+     "wrong": 9,
+     "abstain": 34
+    },
+    "order_id": {
+     "correct": 58,
+     "wrong": 9,
+     "abstain": 26
+    },
+    "phone": {
+     "correct": 64,
+     "wrong": 0,
+     "abstain": 36
+    },
+    "amount": {
+     "correct": 72,
+     "wrong": 10,
+     "abstain": 13
+    }
+   }
+  },
+  {
+   "level": 0.15,
+   "extractor": "normalised",
+   "total": {
+    "correct": 369,
+    "wrong": 3,
+    "abstain": 28
+   },
+   "slots": {
+    "pin": {
+     "correct": 107,
+     "wrong": 0,
+     "abstain": 5
+    },
+    "order_id": {
+     "correct": 73,
+     "wrong": 0,
+     "abstain": 20
+    },
+    "phone": {
+     "correct": 97,
+     "wrong": 0,
+     "abstain": 3
+    },
+    "amount": {
+     "correct": 92,
+     "wrong": 3,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.2,
+   "extractor": "naive",
+   "total": {
+    "correct": 222,
+    "wrong": 18,
+    "abstain": 160
+   },
+   "slots": {
+    "pin": {
+     "correct": 55,
+     "wrong": 4,
+     "abstain": 53
+    },
+    "order_id": {
+     "correct": 51,
+     "wrong": 4,
+     "abstain": 38
+    },
+    "phone": {
+     "correct": 54,
+     "wrong": 0,
+     "abstain": 46
+    },
+    "amount": {
+     "correct": 62,
+     "wrong": 10,
+     "abstain": 23
+    }
+   }
+  },
+  {
+   "level": 0.2,
+   "extractor": "normalised",
+   "total": {
+    "correct": 367,
+    "wrong": 3,
+    "abstain": 30
+   },
+   "slots": {
+    "pin": {
+     "correct": 107,
+     "wrong": 0,
+     "abstain": 5
+    },
+    "order_id": {
+     "correct": 71,
+     "wrong": 0,
+     "abstain": 22
+    },
+    "phone": {
+     "correct": 97,
+     "wrong": 0,
+     "abstain": 3
+    },
+    "amount": {
+     "correct": 92,
+     "wrong": 3,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.25,
+   "extractor": "naive",
+   "total": {
+    "correct": 204,
+    "wrong": 28,
+    "abstain": 168
+   },
+   "slots": {
+    "pin": {
+     "correct": 58,
+     "wrong": 6,
+     "abstain": 48
+    },
+    "order_id": {
+     "correct": 41,
+     "wrong": 9,
+     "abstain": 43
+    },
+    "phone": {
+     "correct": 49,
+     "wrong": 0,
+     "abstain": 51
+    },
+    "amount": {
+     "correct": 56,
+     "wrong": 13,
+     "abstain": 26
+    }
+   }
+  },
+  {
+   "level": 0.25,
+   "extractor": "normalised",
+   "total": {
+    "correct": 354,
+    "wrong": 6,
+    "abstain": 40
+   },
+   "slots": {
+    "pin": {
+     "correct": 104,
+     "wrong": 0,
+     "abstain": 8
+    },
+    "order_id": {
+     "correct": 65,
+     "wrong": 0,
+     "abstain": 28
+    },
+    "phone": {
+     "correct": 96,
+     "wrong": 0,
+     "abstain": 4
+    },
+    "amount": {
+     "correct": 89,
+     "wrong": 6,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.3,
+   "extractor": "naive",
+   "total": {
+    "correct": 172,
+    "wrong": 26,
+    "abstain": 202
+   },
+   "slots": {
+    "pin": {
+     "correct": 45,
+     "wrong": 9,
+     "abstain": 58
+    },
+    "order_id": {
+     "correct": 29,
+     "wrong": 6,
+     "abstain": 58
+    },
+    "phone": {
+     "correct": 40,
+     "wrong": 0,
+     "abstain": 60
+    },
+    "amount": {
+     "correct": 58,
+     "wrong": 11,
+     "abstain": 26
+    }
+   }
+  },
+  {
+   "level": 0.3,
+   "extractor": "normalised",
+   "total": {
+    "correct": 347,
+    "wrong": 2,
+    "abstain": 51
+   },
+   "slots": {
+    "pin": {
+     "correct": 105,
+     "wrong": 0,
+     "abstain": 7
+    },
+    "order_id": {
+     "correct": 55,
+     "wrong": 0,
+     "abstain": 38
+    },
+    "phone": {
+     "correct": 94,
+     "wrong": 0,
+     "abstain": 6
+    },
+    "amount": {
+     "correct": 93,
+     "wrong": 2,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.35,
+   "extractor": "naive",
+   "total": {
+    "correct": 140,
+    "wrong": 31,
+    "abstain": 229
+   },
+   "slots": {
+    "pin": {
+     "correct": 36,
+     "wrong": 9,
+     "abstain": 67
+    },
+    "order_id": {
+     "correct": 30,
+     "wrong": 7,
+     "abstain": 56
+    },
+    "phone": {
+     "correct": 25,
+     "wrong": 0,
+     "abstain": 75
+    },
+    "amount": {
+     "correct": 49,
+     "wrong": 15,
+     "abstain": 31
+    }
+   }
+  },
+  {
+   "level": 0.35,
+   "extractor": "normalised",
+   "total": {
+    "correct": 352,
+    "wrong": 2,
+    "abstain": 46
+   },
+   "slots": {
+    "pin": {
+     "correct": 104,
+     "wrong": 0,
+     "abstain": 8
+    },
+    "order_id": {
+     "correct": 59,
+     "wrong": 0,
+     "abstain": 34
+    },
+    "phone": {
+     "correct": 96,
+     "wrong": 0,
+     "abstain": 4
+    },
+    "amount": {
+     "correct": 93,
+     "wrong": 2,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.4,
+   "extractor": "naive",
+   "total": {
+    "correct": 127,
+    "wrong": 24,
+    "abstain": 249
+   },
+   "slots": {
+    "pin": {
+     "correct": 31,
+     "wrong": 4,
+     "abstain": 77
+    },
+    "order_id": {
+     "correct": 22,
+     "wrong": 7,
+     "abstain": 64
+    },
+    "phone": {
+     "correct": 22,
+     "wrong": 0,
+     "abstain": 78
+    },
+    "amount": {
+     "correct": 52,
+     "wrong": 13,
+     "abstain": 30
+    }
+   }
+  },
+  {
+   "level": 0.4,
+   "extractor": "normalised",
+   "total": {
+    "correct": 335,
+    "wrong": 5,
+    "abstain": 60
+   },
+   "slots": {
+    "pin": {
+     "correct": 105,
+     "wrong": 0,
+     "abstain": 7
+    },
+    "order_id": {
+     "correct": 54,
+     "wrong": 0,
+     "abstain": 39
+    },
+    "phone": {
+     "correct": 86,
+     "wrong": 0,
+     "abstain": 14
+    },
+    "amount": {
+     "correct": 90,
+     "wrong": 5,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.45,
+   "extractor": "naive",
+   "total": {
+    "correct": 110,
+    "wrong": 31,
+    "abstain": 259
+   },
+   "slots": {
+    "pin": {
+     "correct": 30,
+     "wrong": 6,
+     "abstain": 76
+    },
+    "order_id": {
+     "correct": 10,
+     "wrong": 11,
+     "abstain": 72
+    },
+    "phone": {
+     "correct": 23,
+     "wrong": 0,
+     "abstain": 77
+    },
+    "amount": {
+     "correct": 47,
+     "wrong": 14,
+     "abstain": 34
+    }
+   }
+  },
+  {
+   "level": 0.45,
+   "extractor": "normalised",
+   "total": {
+    "correct": 318,
+    "wrong": 6,
+    "abstain": 76
+   },
+   "slots": {
+    "pin": {
+     "correct": 98,
+     "wrong": 0,
+     "abstain": 14
+    },
+    "order_id": {
+     "correct": 50,
+     "wrong": 0,
+     "abstain": 43
+    },
+    "phone": {
+     "correct": 81,
+     "wrong": 0,
+     "abstain": 19
+    },
+    "amount": {
+     "correct": 89,
+     "wrong": 6,
+     "abstain": 0
+    }
+   }
+  },
+  {
+   "level": 0.5,
+   "extractor": "naive",
+   "total": {
+    "correct": 83,
+    "wrong": 26,
+    "abstain": 291
+   },
+   "slots": {
+    "pin": {
+     "correct": 15,
+     "wrong": 5,
+     "abstain": 92
+    },
+    "order_id": {
+     "correct": 12,
+     "wrong": 7,
+     "abstain": 74
+    },
+    "phone": {
+     "correct": 20,
+     "wrong": 0,
+     "abstain": 80
+    },
+    "amount": {
+     "correct": 36,
+     "wrong": 14,
+     "abstain": 45
+    }
+   }
+  },
+  {
+   "level": 0.5,
+   "extractor": "normalised",
+   "total": {
+    "correct": 321,
+    "wrong": 5,
+    "abstain": 74
+   },
+   "slots": {
+    "pin": {
+     "correct": 95,
+     "wrong": 0,
+     "abstain": 17
+    },
+    "order_id": {
+     "correct": 47,
+     "wrong": 0,
+     "abstain": 46
+    },
+    "phone": {
+     "correct": 89,
+     "wrong": 0,
+     "abstain": 11
+    },
+    "amount": {
+     "correct": 90,
+     "wrong": 5,
+     "abstain": 0
+    }
+   }
+  }
+ ]
+}
