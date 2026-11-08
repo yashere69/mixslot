@@ -156,7 +156,11 @@ database lookup would agree.
   both directions.
 - Amounts said as Hindi number words aren't composed ("दो सौ निन्यानवे" is not read as
   299). When a recogniser half-transcribes one, the normaliser can pass on a partial
-  amount, so read amounts back to the caller.
+  amount, so read amounts back to the caller. Composition was left out on evidence: of the
+  132 held-out amount transcripts from Whisper base, 5 contain a word like "hazaar" or
+  "thousand", and all 5 are hallucinations a composer couldn't fix. It's worth adding with
+  a recogniser that writes amounts out as words; [indic-itn](https://pypi.org/project/indic-itn/)
+  already does the composing.
 
 Stable: `normalised()`/`normalise()`, the slot validators and the `eval` input format.
 Experimental: the noise operators and their rates.
