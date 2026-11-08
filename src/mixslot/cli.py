@@ -48,6 +48,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "eval":
         try:
             rows = bench.load_transcripts(args.transcripts)
+            if not rows:
+                raise ValueError(f"{args.transcripts}: no transcripts to score")
         except (OSError, ValueError) as e:
             print(f"error: {e}", file=sys.stderr)
             return 2

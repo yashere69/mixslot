@@ -93,3 +93,10 @@ def test_with_is_not_seven():
     from mixslot.extract import normalise
 
     assert "7" not in normalise("मैं साथ में आऊँगा")
+
+
+def test_eval_of_an_empty_file_is_an_error(tmp_path, capsys):
+    empty = tmp_path / "t.jsonl"
+    empty.write_text("\n", encoding="utf-8")
+    assert main(["eval", str(empty)]) == 2
+    assert "no transcripts to score" in capsys.readouterr().err

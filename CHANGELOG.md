@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- `eval` on a file with no transcripts is an error; it used to print an empty table and
+  exit 0.
+
 ## 0.3.0
 
 - `mixslot eval transcripts.jsonl`: score transcripts from a real recogniser (correct,
