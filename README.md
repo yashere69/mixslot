@@ -79,11 +79,13 @@ words.
 
 ## Prior art
 
-Inverse text normalisation (turning "nine eight seven" into 987) is a solved problem for
-English. NVIDIA's [NeMo text processing](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/nlp/text_normalization/wfst/wfst_text_normalization.html)
-does it with WFST grammars for a list of languages. Hindi and Hinglish aren't on that list,
-and its only code-switched entry is Spanish-English. mixslot is narrower: digits and codes
-only, no grammar toolkit, about 150 lines.
+Inverse text normalisation (turning "nine eight seven" into 987) is well covered. NVIDIA's
+[NeMo text processing](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/nlp/text_normalization/wfst/wfst_text_normalization.html)
+does it with WFST grammars. [indic-itn](https://pypi.org/project/indic-itn/) handles Hindi
+number words well, including compositional amounts ("चौदह सौ निन्यानवे" → ₹1,499), which
+mixslot doesn't. mixslot is narrower and aimed at tool arguments: spelled codes (`के सी`,
+`kay see`), digits in any of three scripts and two languages, and refusing a value that
+fails the slot's validator instead of passing it on.
 
 ## The noise model
 
@@ -99,11 +101,16 @@ Each operator fires with probability proportional to `level` on each eligible to
 | Devanagari digits in the transcript | `KC७२५२` |
 | a digit dropped entirely | `9876543210` → `987654310` |
 
-**The model is not calibrated.** The operators come from how these errors look in
-transcripts, not from measured rates for any ASR system, so `level` is a knob, not a WER.
-The curves show the shape of the problem and how two extraction strategies compare under
-it. To calibrate, you'd need labelled audio from real calls (the HiACC corpus is one
-candidate, subject to its licence), which is the obvious next step.
+**Checked against a real recogniser, the model is optimistic.**
+[results/asr.md](results/asr.md) runs Whisper base on Hindi TTS speech: two voices, clean,
+telephone-band and noisy, with a dev set and a held-out set. Whisper writes Hindi in three
+scripts, hyphenates digits, drops some and hallucinates under noise, and the extractors do
+worse there than at the synthetic model's harshest level. On the held-out transcripts the
+normaliser gets 11.1% of values right against the regex's 6.6%, with wrong values at
+11.6% against 12.3%. Most values can't be recovered at all. So `level` is still a knob,
+not a WER. `mixslot eval your-transcripts.jsonl` measures a recogniser that matters to you
+and says which synthetic level it resembles. Labelled audio from real calls (the HiACC
+corpus is one candidate, subject to its licence) is the remaining step.
 
 ## The normaliser
 
@@ -131,6 +138,14 @@ database lookup would agree.
   model, since it hands the model clean digits.
 - The utterance templates are short and single-slot. Real calls carry several numbers in one
   turn ("order KC7252, number 98…"), which makes slot confusion possible. That isn't modelled.
-- There's no audio anywhere: this is text-only noise.
+- The synthetic benchmark is text-only noise. The audio check uses TTS speech and one
+  small recogniser, not callers. Real calls and production recognisers will differ in
+  both directions.
+- Amounts said as Hindi number words aren't composed ("दो सौ निन्यानवे" is not read as
+  299). When a recogniser half-transcribes one, the normaliser can pass on a partial
+  amount, so read amounts back to the caller.
+
+Stable: `normalised()`/`normalise()`, the slot validators and the `eval` input format.
+Experimental: the noise operators and their rates.
 
 MIT licensed.
