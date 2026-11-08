@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Output is UTF-8 even when redirected on Windows, where it used to follow the code page
+  and fail on Devanagari text.
+- CI runs the tests on Windows and macOS as well as Linux.
 - `eval` on a file with no transcripts is an error; it used to print an empty table and
   exit 0.
 
