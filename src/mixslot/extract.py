@@ -17,8 +17,34 @@ from .slots import VALIDATORS
 
 WORD_TO_DIGIT = {w: str(i) for i, w in enumerate(EN)} | {w: str(i) for i, w in enumerate(HI)}
 WORD_TO_DIGIT |= {"oh": "0", "char": "4", "panch": "5", "chah": "6", "sat": "7", "ath": "8"}
-REPEAT = {"double": 2, "triple": 3}
-DEV = str.maketrans("०१२३४५६७८९", "0123456789")
+# Recognisers write Hindi speech in Devanagari, in Urdu script, or as English words spelled
+# in Devanagari ("वन टू"). Digit words in all three, checked against Whisper's output on
+# spoken Hindi (tools/asr_calibration.py). "साथ"/"ساتھ" (with) is left out on purpose: it is
+# far more often the word than a misheard seven.
+WORD_TO_DIGIT |= {w: str(i) for i, w in enumerate("शून्य एक दो तीन चार पाँच छह सात आठ नौ".split())}
+WORD_TO_DIGIT |= {
+    "पांच": "5",
+    "छः": "6",
+    "छे": "6",
+    "ज़ीरो": "0",
+    "जीरो": "0",
+    "वन": "1",
+    "टू": "2",
+    "थ्री": "3",
+    "फ़ोर": "4",
+    "फोर": "4",
+    "फ़ाइव": "5",
+    "फाइव": "5",
+    "सिक्स": "6",
+    "सेवन": "7",
+    "एट": "8",
+    "नाइन": "9",
+}
+WORD_TO_DIGIT |= {w: str(i) for i, w in enumerate("صفر ایک دو تین چار پانچ چھ سات آٹھ نو".split())}
+REPEAT = {"double": 2, "triple": 3, "डबल": 2, "ट्रिपल": 3, "ڈبل": 2}
+# Devanagari, Arabic-Indic and Extended Arabic-Indic (Urdu) digits
+DEV = str.maketrans("०१२३४५६७८९٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹", "012345678901234567890123456789")
+LETTER_WORDS = {"के": "K", "सी": "C", "کے": "K", "سی": "C"}
 
 PATTERNS = {
     "order_id": re.compile(r"KC\s?(\d{4})\b"),
@@ -66,7 +92,13 @@ LETTER_NAMES = {
 def _letter(tok: str) -> str | None:
     if len(tok) == 1 and tok.isalpha() and tok.isupper():
         return tok
-    return LETTER_NAMES.get(tok.lower())
+    return LETTER_NAMES.get(tok.lower()) or LETTER_WORDS.get(tok)
+
+
+# Digits read out one at a time often come back hyphenated ("8-5-8-17-56") and a code with
+# a hyphen after its letters ("KC-0387"). Both are split into the spaced form the rest of
+# the normaliser already joins.
+_HYPHEN_DIGITS = re.compile(r"(?<=\d)-(?=\d)|(?<=\b[A-Z]{2})-(?=\d)")
 
 
 def _spelled_codes(tokens: list[str]) -> list[str]:
@@ -92,7 +124,7 @@ def _spelled_codes(tokens: list[str]) -> list[str]:
 
 def normalise(text: str) -> str:
     """Rebuild codes and numbers the way they were said. Deterministic, no model."""
-    tokens = _spelled_codes(text.translate(DEV).split())
+    tokens = _spelled_codes(_HYPHEN_DIGITS.sub(" ", text.translate(DEV)).split())
     out: list[str] = []
     run = ""
     repeat = 1
