@@ -165,4 +165,17 @@ database lookup would agree.
 Stable: `normalised()`/`normalise()`, the slot validators and the `eval` input format.
 Experimental: the noise operators and their rates.
 
+## Development
+
+```bash
+pip install -e ".[dev]"
+ruff check . && ruff format --check . && mypy src && pytest
+python tools/build_site.py    # regenerates results/curve.json and the page
+```
+
+Normaliser changes should be checked against the committed transcripts with
+`mixslot eval results/asr-dev.jsonl`. Leave `asr-test.jsonl` for a final check, or it
+stops being held out. `tools/asr_calibration.py` regenerates the transcripts themselves;
+it needs sherpa-onnx and the Piper and Whisper assets named in its docstring.
+
 MIT licensed.
