@@ -33,7 +33,18 @@ mixslot extract phone "mera number nau aath double saat chhe paanch chaar teen d
 No API key needed. To compare a real model as a third extractor:
 `MIXSLOT_API_KEY=… mixslot bench --endpoint <openai-compatible-url> --model <name>`.
 
-## Results (400 utterances, seed 11)
+## Results
+
+Two measurements, and they disagree in a way worth reading before either.
+
+**On a real recogniser** (Whisper base on Hindi TTS speech, 576 held-out transcripts,
+[results/asr.md](results/asr.md)): the normaliser gets 11.1% of values right against a plain
+regex's 6.6%, and passes on a wrong value 11.6% of the time against 12.3%. It recovers more
+values, but it does not make wrong values rarer, because most wrong values come from digits
+the recogniser never wrote down. Read numbers back to the caller.
+
+**On the synthetic noise model** (400 utterances, seed 11), which is what the page and the
+table below show:
 
 | Noise | Naive: correct / wrong / refused | Normalised: correct / wrong / refused |
 |---|---|---|
@@ -47,9 +58,11 @@ regenerates it along with the page.
 
 The **wrong** column matters more than the correct one. A refusal costs one more turn
 ("could you repeat the order number?"). A wrong value costs a wrong refund, a message to a
-stranger's phone, or a cancelled order that wasn't theirs. The normaliser's validator cuts
-wrong values from 26 to 2 at noise 0.3, because a 9-digit "phone number" or a phone
-number starting with 5 is refused, not passed on.
+stranger's phone, or a cancelled order that wasn't theirs. On synthetic noise the
+normaliser's validator cuts wrong values from 26 to 2 at noise 0.3, because a 9-digit
+"phone number" or a phone number starting with 5 is refused, not passed on. The synthetic
+model mostly drops or rewrites digits in ways the validator can see, which is why it's
+optimistic; the recogniser above produces wrong values that still look valid.
 
 ## Use it in front of your own tools
 

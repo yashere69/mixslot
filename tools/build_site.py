@@ -58,8 +58,11 @@ sent to the tool</span><span><i class="a"></i>refused, agent asks again</span></
 <div class="panel"><h2 style="font-size:1.1rem;margin:0 0 8px">Sample transcripts at noise 0.3</h2>
 <div class="wrap"><table><thead><tr><th>Transcript</th><th>Wanted</th><th>Naive</th>
 <th>Normalised</th></tr></thead><tbody id="ex"></tbody></table></div></div>
-<p class="muted">The noise model is synthetic and uncalibrated: it shows the shape of the
-problem, not any vendor's error rate. n=__N__ utterances, seed __SEED__.
+<p class="muted">The noise model is synthetic (n=__N__ utterances, seed __SEED__) and, checked
+against a real recogniser, optimistic. On Whisper base transcripts of Hindi TTS speech the
+normaliser got 11.1% of values right and passed on a wrong one 11.6% of the time
+(<a href="https://github.com/yashere69/mixslot/blob/main/results/asr.md">results/asr.md</a>).
+Treat this page as the shape of the problem, not a recogniser's error rate.
 Source: <a href="https://github.com/yashere69/mixslot">github.com/yashere69/mixslot</a>.</p>
 </main>
 <script>
